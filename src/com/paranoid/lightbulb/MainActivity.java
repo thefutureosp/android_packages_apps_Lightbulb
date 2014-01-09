@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
     private static boolean sHasFlash;
     private static Context sContext;
 
+    private static boolean sTorchState;
+
     private static ImageView sLightBulb;
     private static ImageView sTorchLight;
 
@@ -65,6 +67,7 @@ public class MainActivity extends Activity {
             Intent i = new Intent(sContext, TorchSwitch.class);
             i.setAction(TorchSwitch.TOGGLE_FLASHLIGHT);
             sContext.sendBroadcast(i);
+	    sTorchState = intent.getIntExtra("state", 0) != 0;
             view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         }
     };
@@ -74,6 +77,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sContext = this;
+
+	sTorchState = false;
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
